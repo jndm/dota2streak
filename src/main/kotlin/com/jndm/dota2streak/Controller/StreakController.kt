@@ -20,7 +20,7 @@ class StreakController (private val matchService : MatchService) {
     fun getSearchResult(@RequestParam(required = true)accountId : Long) : StreakInformation? {
         var allMatches = matchService.getMatches(accountId)?.sortedByDescending { it.startTime }
 
-        if(allMatches == null ||allMatches.isEmpty()) {
+        if(allMatches == null || allMatches.isEmpty()) {
             return null
         }
 

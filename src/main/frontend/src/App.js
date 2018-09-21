@@ -15,7 +15,7 @@ class App extends Component {
         super();
         this.state = {
             user: null,
-            loading: true
+            loading: false
         }
     }
 
@@ -36,10 +36,12 @@ class App extends Component {
 
     render() {
         return (
-            <Switch>
-                <Route exact path='/stats/:accountId' render={(props) => <Stats {...props} />} />
-                <Route path='/' render={(props) => <Search {...props} getUserInfo={this.getUserInfo} loading={this.state.loading} />} />
-            </Switch>
+            <div className="content">
+                <Switch>
+                    <Route exact path='/stats/:accountId' render={(props) => <Stats {...props} />} />
+                    <Route path='/' render={(props) => <Search {...props} getUserInfo={this.getUserInfo} loading={this.state.loading} />} />
+                </Switch>
+            </div>
         );
     }
 }
