@@ -1,0 +1,8 @@
+{
+  "short_name": "Dota2streak",
+  "name": "Dota 2 streak",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,0 +1,1 @@
+Counts dota 2 streaks (win or lose)
