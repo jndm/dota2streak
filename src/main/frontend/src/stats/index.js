@@ -9,7 +9,8 @@ class Stats extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            streak: null
+            streak: null,
+            error: null
         }
     }
 
@@ -34,6 +35,7 @@ class Stats extends Component {
             }
             this.setState({streak: response.data});
         } catch(err) {
+            this.setState({error: 'Failed to retrieve match history.'});
             console.log(err);
         }
     }
@@ -52,18 +54,39 @@ class Stats extends Component {
     }
 
     render() {
-        let streak = this.state.streak;
-        let user = this.state.user;
-
-        //if(!streak || !user) {
+        if(this.state.error) {
             return (
                 <div>
-                    <div>
-                        <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
+                    <div className="back-button">
+                        <Link to="/search">
+                            <FontAwesomeIcon icon='angle-double-left'/>
+                            <span>&nbsp;New search</span>
+                        </Link>
+                    </div>
+                    <div className="error">
+                        <div>
+                            <div>
+                                Failed to retrieve user's match history.
+                            </div>
+                            <div>
+                                Please try again later.
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
-        //}
+        }
+
+        let streak = this.state.streak;
+        let user = this.state.user;
+
+        if(!user || !streak) {
+            return (
+                <div className="center">
+                    <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
+                </div>
+            );
+        }
 
         return (
             <div>
