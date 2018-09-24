@@ -1,0 +1,54 @@
+.user-card {
+    margin: 20px auto 0px auto;
+    font-size: 7em;
+    display: table;
+    height: 200px;
+}
+
+.avatar {
+    vertical-align: middle;
+}
+
+.username {
+    margin-left: 30px;
+    text-decoration: underline;
+}
+
+.stats-table {
+    margin: auto;
+    font-size: 3em;
+    text-align: left;
+}
+
+.stats-table td {
+    padding: 0px 10px;
+}
+
+.stats-table .win {
+    color: limegreen;
+}
+
+.stats-table .lose {
+    color: red;
+}
+
+.back-button {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: left;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.loading {
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

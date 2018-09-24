@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service("accountService")
 interface AccountService {
-    fun getAccounts(name : String) : List<Account>?
+    fun getAccounts(param : String) : List<Account>?
 }

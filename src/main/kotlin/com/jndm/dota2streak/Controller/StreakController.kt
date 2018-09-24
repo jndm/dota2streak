@@ -46,7 +46,10 @@ class StreakController (private val matchService : MatchService) {
         return StreakInformation(combinedStreak, rankedStreak, unrankedStreak)
     }
 
-    private fun countStreak(matches : List<Match>) : Streak {
+    private fun countStreak(matches : List<Match>) : Streak? {
+        if(matches == null || matches.isEmpty()) {
+            return null
+        }
         val win = matches.first().matchWon()
         var streakCount = 0
         run loop@{

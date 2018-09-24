@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import './index.css';
 
 class Stats extends Component {
     constructor(props) {
@@ -10,20 +14,21 @@ class Stats extends Component {
     }
 
     componentDidMount = async () => {
-
-        // TODO: Voisi tuoda käyttäjätiedot myös?
-        /*
-        let user = this.props.user;
-        if(user == null) {
-            // TODO: hae käyttäjätiedot uudelleen apista account_id:n perusteella.
-            // TODO: huom. vaatii muokkausta myös backendin similarityn mukaan järjestelyyn, koska id:n perusteella haku ei palauta similarityä ollenkaan jos täsmää täysin.
-        }
-        this.setState({user: user});
-        */
-        let accountId = this.props.match.params.accountId;
-        console.log(this.props.match.params.accountId);
         try {
-            let response = await axios.get('/matches', { params: { accountId } });
+            let user = this.state.user;
+            let response = null;
+            let accountId = this.props.match.params.accountId;
+            if(user == null) {
+                if(this.props.user) {
+                    user = this.props.user;
+                } else {
+                    response = await axios.get('/search-by-id', { params: { accountId } });
+                    user = response.data;
+                }
+                this.setState({user});
+            }
+
+            response = await axios.get('/matches', { params: { accountId } });
             if(response.data == null) {
                 throw new Error("Unable to find gaming history for id: ", );
             }
@@ -33,38 +38,52 @@ class Stats extends Component {
         }
     }
 
-    render() {
-        let streak = this.state.streak;
+    getTableRow = (title, streak) => {
         if(!streak) {
             return null;
         }
+        return (
+            <tr>
+                <td>{title}</td>
+                <td className={streak.win ? 'win' : 'lose'}>{streak.win ? 'Winning Streak' : 'Losing Streak'}</td>
+                <td className={streak.win ? 'win' : 'lose'}>{streak.count}</td>
+            </tr>
+        );
+    }
+
+    render() {
+        let streak = this.state.streak;
+        let user = this.state.user;
+
+        //if(!streak || !user) {
+            return (
+                <div>
+                    <div>
+                        <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
+                    </div>
+                </div>
+            );
+        //}
 
         return (
             <div>
-                <div>
-                    Yhteensä:
+                <div className="back-button">
+                    <Link to="/search">
+                        <FontAwesomeIcon icon='angle-double-left'/>
+                        <span>&nbsp;New search</span>
+                    </Link>
                 </div>
-                <div>
-                    {streak.combinedStreak.win ? 'Vihreää: ' : 'Punaista: '}
-                    {streak.combinedStreak.count}
+                <div className="user-card">
+                    <img className="avatar" src={user.avatarfull} alt="avatar" />
+                    <span className="username">{user.personaname}</span>
                 </div>
-
-                <div>
-                    Ranked:
-                </div>
-                <div>
-                    {streak.rankedStreak.win ? 'Vihreää: ' : 'Punaista: '}
-                    {streak.rankedStreak.count}
-                </div>
-
-
-                <div>
-                    Unranked:
-                </div>
-                <div>
-                    {streak.unrankedStreak.win ? 'Vihreää: ' : 'Punaista: '}
-                    {streak.unrankedStreak.count}
-                </div>
+                <table className="stats-table">
+                    <tbody>
+                        {this.getTableRow("All Games", streak.combinedStreak)}
+                        {this.getTableRow("Ranked", streak.rankedStreak)}
+                        {this.getTableRow("Unranked", streak.unrankedStreak)}
+                    </tbody>
+                </table>
             </div>
         );
     }

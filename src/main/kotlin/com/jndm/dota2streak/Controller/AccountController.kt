@@ -8,11 +8,21 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class AccountController(private val accountService: AccountService) {
-    @GetMapping("/search")
-    fun getSearchResult(@RequestParam(required = true)name : String) : Account? {
-        return accountService.getAccounts(name)
+    @GetMapping("/search-by-name")
+    fun getSearchResultByName(@RequestParam(required = true)name : String) : Account? {
+        var accounts = accountService.getAccounts(name)
+
+        accounts = accounts
                 ?.asSequence()
-                ?.sortedWith(compareBy(nullsLast<Float>()) { it.similarity })
-                ?.first()
+                ?.sortedWith(compareByDescending(nullsFirst<Float>()) {it.similarity})
+                ?.toList()
+
+        return accounts?.first()
+    }
+
+    @GetMapping("/search-by-id")
+    fun getSearchResultById(@RequestParam(required = true)accountId : String) : Account? {
+        val accounts = accountService.getAccounts(accountId)
+        return accounts?.firstOrNull { it.similarity == 0.0f }
     }
 }

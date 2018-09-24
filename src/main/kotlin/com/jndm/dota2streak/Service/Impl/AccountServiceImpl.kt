@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service("accountService")
 class AccountServiceImpl(private val accountRestService: AccountRestService) : AccountService {
-
-    override fun getAccounts(name: String): List<Account>? {
-        return accountRestService.getAccounts(name).execute().body()
+    override fun getAccounts(param: String): List<Account>? {
+        return accountRestService.getAccounts(param).execute().body()
     }
 
 }

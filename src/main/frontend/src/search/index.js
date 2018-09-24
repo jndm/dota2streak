@@ -12,6 +12,12 @@ class Stats extends Component {
         }
     }
 
+    onKeyPress = (target) => {
+        if(target.charCode === 13) {
+            this.onClickSearch();
+        }
+    }
+
     onChangeName = (e) => {
         this.setState({
             name: e.target.value
@@ -29,7 +35,7 @@ class Stats extends Component {
                     <label htmlFor="name">Dota 2 Name</label>
                 </div>
                 <div>
-                    <input className="input" type="text" name="name" value={this.state.name} onChange={this.onChangeName}/>
+                    <input className="input" type="text" name="name" value={this.state.name} onChange={this.onChangeName} onKeyPress={this.onKeyPress}/>
                     <button className="searchButton" onClick={this.onClickSearch} disabled={this.props.loading}>
                         <FontAwesomeIcon icon='search' size="2x"/>
                     </button>
