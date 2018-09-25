@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
 
 import './index.css';
 import ErrorMessage from "./ErrorMessage";
@@ -71,9 +70,7 @@ class Stats extends Component {
         if(!user || !streak) {
             return (
                 <div className="stats-container">
-                    <div className="center">
-                        <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
-                    </div>
+                    <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
                 </div>
             );
         }

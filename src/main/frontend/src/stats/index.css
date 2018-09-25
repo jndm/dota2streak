@@ -3,25 +3,40 @@ a {
     text-decoration: inherit;
 }
 
+
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 .user-card {
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
     font-size: 7em;
+    max-width: 95%;
 }
 
 .username {
     margin-left: 30px;
     text-decoration: underline;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .stats-table-container {
-
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .stats-table {
-    margin: 0px auto 30px auto;
     font-size: 3em;
     text-align: left;
 }
@@ -41,14 +56,7 @@ a {
 .back-button {
     margin-top: 10px;
     margin-left: 10px;
-    text-align: left;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
+    align-self: flex-start;
 }
 
 .loading {
@@ -57,18 +65,13 @@ a {
     animation:spin 4s linear infinite;
 }
 
-.stats-container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
 .error-container {
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
     font-size: 3em;
+    align-items: center;
 }
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }

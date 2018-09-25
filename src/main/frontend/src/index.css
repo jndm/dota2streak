@@ -7,10 +7,14 @@ body {
   color: #6495ED;
 }
 
-.content {
+#root {
   display: flex;
   justify-content: center;
-  margin: 40px auto;
+}
+
+.content {
+  display: flex;
+  margin-top: 40px;
   width: 80%;
   min-width: 900px;
   height: 50%;
@@ -19,5 +23,5 @@ body {
   border: 1px solid rgb(20, 30, 49);
   border-radius: 1%;
   box-shadow: 2px 5px 18px 1px rgb(20, 32, 54);
-  text-align: center;
+  justify-content: center;
 }

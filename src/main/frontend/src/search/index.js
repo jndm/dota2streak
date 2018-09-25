@@ -13,6 +13,10 @@ class Stats extends Component {
     }
 
     onKeyPress = (target) => {
+        if(this.props.loading) {
+            return;
+        }
+
         if(target.charCode === 13) {
             this.onClickSearch();
         }
@@ -29,15 +33,19 @@ class Stats extends Component {
     }
 
     render() {
+        console.log(this.props.loading);
         return (
-            <div>
+            <div className="search-container">
                 <div className="title">
                     <label htmlFor="name">Dota 2 Name</label>
                 </div>
                 <div>
                     <input className="input" type="text" name="name" value={this.state.name} onChange={this.onChangeName} onKeyPress={this.onKeyPress}/>
                     <button className="searchButton" onClick={this.onClickSearch} disabled={this.props.loading}>
-                        <FontAwesomeIcon icon='search' size="2x"/>
+                        {!this.props.loading
+                            ? <FontAwesomeIcon icon='search' size="2x"/>
+                            : <FontAwesomeIcon className="loading" icon="spinner" size="2x"/>
+                        }
                     </button>
                 </div>
             </div>

@@ -31,6 +31,7 @@ class App extends Component {
             this.setState({user: response.data});
             this.props.history.push(`/stats/${response.data.account_id}`);
         } catch (err) {
+            this.setState({loading: false});
             console.log(err);
         }
     }
