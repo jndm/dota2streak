@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 import './index.css';
+import ErrorMessage from "./ErrorMessage";
+import BackButton from "./BackButton";
 
 class Stats extends Component {
     constructor(props) {
@@ -54,59 +56,44 @@ class Stats extends Component {
     }
 
     render() {
+        let streak = this.state.streak;
+        let user = this.state.user;
+
         if(this.state.error) {
             return (
-                <div>
-                    <div className="back-button">
-                        <Link to="/search">
-                            <FontAwesomeIcon icon='angle-double-left'/>
-                            <span>&nbsp;New search</span>
-                        </Link>
-                    </div>
-                    <div className="error">
-                        <div>
-                            <div>
-                                Failed to retrieve user's match history.
-                            </div>
-                            <div>
-                                Please try again later.
-                            </div>
-                        </div>
-                    </div>
+                <div className="stats-container">
+                    <BackButton />
+                    <ErrorMessage />
                 </div>
             );
         }
 
-        let streak = this.state.streak;
-        let user = this.state.user;
-
         if(!user || !streak) {
             return (
-                <div className="center">
-                    <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
+                <div className="stats-container">
+                    <div className="center">
+                        <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
+                    </div>
                 </div>
             );
         }
 
         return (
-            <div>
-                <div className="back-button">
-                    <Link to="/search">
-                        <FontAwesomeIcon icon='angle-double-left'/>
-                        <span>&nbsp;New search</span>
-                    </Link>
-                </div>
+            <div className="stats-container">
+                <BackButton />
                 <div className="user-card">
-                    <img className="avatar" src={user.avatarfull} alt="avatar" />
+                    <img src={user.avatarfull} alt="avatar" />
                     <span className="username">{user.personaname}</span>
                 </div>
-                <table className="stats-table">
-                    <tbody>
-                        {this.getTableRow("All Games", streak.combinedStreak)}
-                        {this.getTableRow("Ranked", streak.rankedStreak)}
-                        {this.getTableRow("Unranked", streak.unrankedStreak)}
-                    </tbody>
-                </table>
+                <div className="stats-table-container">
+                    <table className="stats-table">
+                        <tbody>
+                            {this.getTableRow("All Games", streak.combinedStreak)}
+                            {this.getTableRow("Ranked", streak.rankedStreak)}
+                            {this.getTableRow("Unranked", streak.unrankedStreak)}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
