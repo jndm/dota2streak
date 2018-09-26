@@ -5,15 +5,15 @@ import com.jndm.dota2streak.Service.Rest.MatchRestService
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.PropertySource
+import org.springframework.core.env.Environment
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 
 @Configuration
-class ApplicationConfig {
-    val BASE_URL : String = "https://api.opendota.com/api/"
-    val TIMEOUT : Int = 180
-
+@PropertySource("classpath:application.properties")
+class ApplicationConfig (private val env : Environment){
     @Bean
     fun accountRestService(): AccountRestService {
         val retrofit = buildRetrofit()
@@ -27,10 +27,12 @@ class ApplicationConfig {
     }
 
     private fun buildRetrofit(): Retrofit {
-        val httpClient = buildHttpClient(TIMEOUT)
+        val timeout = Integer.parseInt(env.getProperty("remote.api.timeout"))
+        val baseurl = env.getProperty("remote.api.baseurl")
+        val httpClient = buildHttpClient(timeout)
         return Retrofit.Builder()
                 .client(httpClient)
-                .baseUrl(BASE_URL)
+                .baseUrl(baseurl!!)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build()
     }

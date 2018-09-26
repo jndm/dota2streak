@@ -5,10 +5,12 @@ import com.jndm.dota2streak.Model.Streak.Streak
 import com.jndm.dota2streak.Model.Streak.StreakInformation
 import com.jndm.dota2streak.Service.MatchService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api")
 class StreakController (private val matchService : MatchService) {
     enum class lobbyType(val code : Int) {
         UNRANKED(0),
