@@ -33,7 +33,6 @@ class Stats extends Component {
     }
 
     render() {
-        console.log(this.props.loading);
         return (
             <div className="search-container">
                 <div className="title">
