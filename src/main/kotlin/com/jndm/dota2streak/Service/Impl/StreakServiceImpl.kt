@@ -77,16 +77,7 @@ class StreakServiceImpl(private val matchRestService: MatchRestService) : Streak
             return null
         }
         val win = matches.first().matchWon()
-        var streakCount = 0
-        run loop@{
-            matches.forEach { match ->
-                if ((win && match.matchWon()) || (!win && !match.matchWon())) {
-                    streakCount++
-                } else {
-                    return@loop
-                }
-            }
-        }
+        val streakCount = matches.asSequence().takeWhile { win == it.matchWon() }.count()
         return Streak(win, streakCount)
     }
 
