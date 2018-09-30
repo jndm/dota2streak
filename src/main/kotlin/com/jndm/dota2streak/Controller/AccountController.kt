@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 class AccountController(private val accountService: AccountService) {
     @GetMapping("/search-by-name")
     fun getSearchResultByName(@RequestParam(required = true)name : String) : Account? {
-        return null
-        /*
         var accounts = accountService.getAccounts(name)
 
         accounts = accounts
@@ -22,7 +20,6 @@ class AccountController(private val accountService: AccountService) {
                 ?.toList()
 
         return accounts?.first()
-        */
     }
 
     @GetMapping("/search-by-id")

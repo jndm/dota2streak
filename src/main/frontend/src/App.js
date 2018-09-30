@@ -81,7 +81,7 @@ class App extends Component {
     getUserInfo = async (name) => {
         try {
             this.setState({loading: true});
-            let response = await axios.get("/search-by-name", { params: { name } });
+            let response = await axios.get("/api/search-by-name", { params: { name } });
             this.setState({loading: false});
 
             if(response.data == null || response.data.account_id == null) {
