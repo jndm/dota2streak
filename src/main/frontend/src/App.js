@@ -53,6 +53,11 @@ const theme = createMuiTheme({
             containedPrimary: {
                 backgroundColor: '#1f2c3f'
             }
+        },
+        MuiPaper: {
+            root: {
+                backgroundColor: '#141d26'
+            }
         }
     }
 });
