@@ -7,18 +7,12 @@ html, body {
   height:100%;
 }
 
-/*
-.content {
-  display: flex;
-  margin-top: 40px;
-  width: 80%;
-  min-width: 900px;
-  height: 50%;
-  min-height: 500px;
-  background-color: #141d26;
-  border: 1px solid rgb(20, 30, 49);
-  border-radius: 1%;
-  box-shadow: 2px 5px 18px 1px rgb(20, 32, 54);
-  justify-content: center;
+.loading {
+  color: #6495ED;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
 }
-*/
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

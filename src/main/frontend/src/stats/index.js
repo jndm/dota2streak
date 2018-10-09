@@ -7,14 +7,20 @@ import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-// import './index.css';
-import ErrorMessage from "./ErrorMessage";
-import BackButton from "./BackButton";
-
 const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        marginTop: '5vh'
+    },
     card: {
         minWidth: 275,
         minHeight: 150,
+    },
+    win: {
+        color: 'green !important',
+    },
+    lose: {
+        color: 'red !important',
     }
 });
 
@@ -29,7 +35,6 @@ class Stats extends Component {
 
     componentDidMount = async () => {
         try {
-            /*
             let user = this.state.user;
             let response = null;
             let accountId = this.props.match.params.accountId;
@@ -37,18 +42,18 @@ class Stats extends Component {
                 if(this.props.user) {
                     user = this.props.user;
                 } else {
-                    response = await axios.get('/search-by-id', { params: { accountId } });
+                    response = await axios.get('/api/search-by-id', { params: { accountId } });
                     user = response.data;
                 }
                 this.setState({user});
             }
 
-            response = await axios.get('/matches', { params: { accountId } });
+            response = await axios.get('/api/matches', { params: { accountId } });
             if(response.data == null) {
                 throw new Error("Unable to find gaming history for id: ", );
             }
             this.setState({streak: response.data});
-            */
+             /*
             var user = {
                 account_id: 321545,
                 personaname: 'jndm',
@@ -95,11 +100,28 @@ class Stats extends Component {
                     count: 7
                 }
             };
-            this.setState({streak});
+            this.setState({streak});*/
         } catch (err) {
             this.setState({error: 'Failed to retrieve match history.'});
             console.log(err);
         }
+    }
+
+    getGridItem  = (classes, title, amount, win) => {
+        return (
+            <Grid item xs={12} md={6} lg={4}>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <Typography variant="h5" color="textPrimary" gutterBottom>
+                            {title}
+                        </Typography>
+                        <Typography variant="h2" align="center" classes={{h2: win ? classes.win : classes.lose}}>
+                            {amount} {win ? ' wins' : ' losses'}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+        );
     }
 
     render() {
@@ -108,151 +130,70 @@ class Stats extends Component {
 
         if (this.state.error) {
             return (
-                <div className="stats-container">
-                    <BackButton/>
-                    <ErrorMessage/>
-                </div>
+                <Grid container justify='center' alignItems='center' className={classes.root}>
+                    <Grid item xs={12}>
+                        <Typography align='center' color="textPrimary" variant="h2">Failed to retrieve user's match history.</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography align='center' color="textPrimary" variant="h2">Please try again later.</Typography>
+                    </Grid>
+                </Grid>
             );
         }
 
         if (!user || !streak) {
             return (
-                <div className="stats-container">
-                    <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
-                </div>
+                <Grid container direction='column' alignItems='center' className={classes.root}>
+                    <Grid item xs={12}>
+                        <Grid container direction='row' alignItems='center'>
+                            <FontAwesomeIcon className="loading" icon="spinner" size="5x"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
             );
         }
 
         return (
-            <Grid container direction="column" justify="flex-start" alignItems="center">
+            <Grid container direction="column" justify="flex-start" alignItems="center" style={{marginTop: 50}}>
                 <Grid item xs={12}>
-                    <Grid container direction="row" spacing={32}>
+                    <Grid container direction="row" spacing={32} alignItems="center">
                         <Grid item>
                             <img src={user.avatarfull} alt="avatar"/>
                         </Grid>
                         <Grid item>
-                            <Typography color="textPrimary" variant="display4">{user.personaname}</Typography>
+                            <Typography color="textPrimary" variant="h1">{user.personaname}</Typography>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12}>
+
+                <Grid item xs={12} container alignItems="flex-start" style={{margin: '20px 0 5px 0'}}>
+                    <Grid item xs={12}>
+                        <Typography color="textPrimary" variant="h4">Current</Typography>
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={12} container>
                     <Grid container direction="row" spacing={32}>
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        Current combined streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.combinedStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                        {this.getGridItem(classes, 'Ranked', streak.rankedStreak.count, streak.rankedStreak.win)}
+                        {this.getGridItem(classes, 'Unranked', streak.unrankedStreak.count, streak.unrankedStreak.win)}
+                        {this.getGridItem(classes, 'Combined', streak.combinedStreak.count, streak.combinedStreak.win)}
+                    </Grid>
+                </Grid>
 
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        Current ranked streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.rankedStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                <Grid item xs={12} container alignItems="flex-start" style={{margin: '20px 0 5px 0'}}>
+                    <Grid item xs={12}>
+                        <Typography color="textPrimary" variant="h4">All Time Highest</Typography>
+                    </Grid>
+                </Grid>
 
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        Current combined streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.unrankedStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        All time highest combined winning streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.highestWinStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        All time highest combined losing streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.highestLoseStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        All time highest ranked winning streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.highestRankedWinStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        All time highest ranked losing streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.highestRankedLoseStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        All time highest unranked winning streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.highestUnrankedWinStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        <Grid item xs={12} md={6} lg={4}>
-                            <Card className={classes.card}>
-                                <CardContent>
-                                    <Typography variant="headline" component="h2" color="textPrimary">
-                                        All time highest unranked losing streak
-                                    </Typography>
-                                    <Typography variant="headline" component="h1" color="textPrimary">
-                                        {streak.highestUnrankedLoseStreak.count}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                <Grid item xs={12} container>
+                    <Grid container direction="row" spacing={32}>
+                        {this.getGridItem(classes, 'Ranked', streak.highestRankedWinStreak.count, true)}
+                        {this.getGridItem(classes, 'Ranked', streak.highestRankedLoseStreak.count, false)}
+                        {this.getGridItem(classes, 'Unranked', streak.highestUnrankedWinStreak.count, true)}
+                        {this.getGridItem(classes, 'Unranked', streak.highestUnrankedLoseStreak.count, false)}
+                        {this.getGridItem(classes, 'Combined', streak.highestWinStreak.count, true)}
+                        {this.getGridItem(classes, 'Combined', streak.highestLoseStreak.count, false)}
                     </Grid>
                 </Grid>
             </Grid>

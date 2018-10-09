@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     button: {
-        width: '60%',
+        width: '100%',
         marginTop: theme.spacing.unit * 2
     }
 })
@@ -45,9 +45,9 @@ class Stats extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <Grid container direction="column" justify="flex-start" alignItems="center">
+            <Grid container direction="column" justify="flex-start" alignItems="center" style={{marginTop: 30}}>
                     <Grid item xs={12}>
-                        <Typography color="textPrimary" variant="display4">
+                        <Typography color="textPrimary" variant="h1">
                             Search
                         </Typography>
                     </Grid>
@@ -65,7 +65,7 @@ class Stats extends Component {
                                 margin="none"
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={1}>
                             <Button
                                 variant="contained"
                                 color="primary"

@@ -17,13 +17,13 @@ const theme = createMuiTheme({
         type: 'dark',
         primary: {
            light: '#6495ED',
-           main: '#141d26',
-           dark: '#243447',
+           main: '#243447',
+           dark: '#141d26',
            contrastText: '#6495ED'
         },
         background: {
-           paper: '#243447',
-           default: '#243447'
+           paper: '#141d26',
+           default: '#141d26'
         },
         text: {
            primary: '#6495ED'
@@ -56,7 +56,7 @@ const theme = createMuiTheme({
         },
         MuiPaper: {
             root: {
-                backgroundColor: '#141d26'
+                backgroundColor: '#243447'
             }
         }
     }
