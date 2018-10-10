@@ -7,6 +7,10 @@ html, body {
   height:100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .loading {
   color: #6495ED;
   -webkit-animation:spin 4s linear infinite;

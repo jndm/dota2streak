@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
     button: {
         width: '100%',
+        maxWidth: '100px',
         marginTop: theme.spacing.unit * 2
     }
 })
@@ -52,7 +53,7 @@ class Stats extends Component {
                         </Typography>
                     </Grid>
                     <Grid container justify="center" spacing={16}>
-                        <Grid item xs={6}>
+                        <Grid item xs={7} sm={6} md={5} lg={4}>
                             <TextField
                                 id="filled-name-input"
                                 label="Nickname"
@@ -65,7 +66,7 @@ class Stats extends Component {
                                 margin="none"
                             />
                         </Grid>
-                        <Grid item xs={1}>
+                        <Grid item xs={2} sm={1} md={1} lg={1}>
                             <Button
                                 variant="contained"
                                 color="primary"

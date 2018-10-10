@@ -110,7 +110,7 @@ class App extends Component {
                         <Header/>
                         <div className={classes.contentContainer}>
                             <Grid container direction="row" justify="center">
-                                <Grid item xs={8}>
+                                <Grid item xs={10}>
                                     <Switch>
                                         <Route exact path='/stats/:accountId' render={(props) => <Stats {...props} user={this.state.user}/>} />
                                         <Route path='/' render={(props) => <Search {...props} getUserInfo={this.getUserInfo} loading={this.state.loading} />} />

@@ -15,6 +15,7 @@ const styles = theme => ({
     card: {
         minWidth: 275,
         minHeight: 150,
+        maxWidth: 375
     },
     win: {
         color: 'green !important',
@@ -35,6 +36,7 @@ class Stats extends Component {
 
     componentDidMount = async () => {
         try {
+
             let user = this.state.user;
             let response = null;
             let accountId = this.props.match.params.accountId;
@@ -154,9 +156,9 @@ class Stats extends Component {
         }
 
         return (
-            <Grid container direction="column" justify="flex-start" alignItems="center" style={{marginTop: 50}}>
-                <Grid item xs={12}>
-                    <Grid container direction="row" spacing={32} alignItems="center">
+            <Grid container direction="column" justify="center" alignItems="center" style={{marginTop: 50}}>
+                <Grid item xs={12} lg={8}>
+                    <Grid container direction="row" spacing={32} alignItems="center" justify="center">
                         <Grid item>
                             <img src={user.avatarfull} alt="avatar"/>
                         </Grid>
@@ -166,35 +168,32 @@ class Stats extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} container alignItems="flex-start" style={{margin: '20px 0 5px 0'}}>
+                <Grid item xs={12} sm={9} md={9} lg={9} container spacing={32} alignItems="flex-start" style={{margin: '20px 0 5px 0'}}>
                     <Grid item xs={12}>
                         <Typography color="textPrimary" variant="h4">Current</Typography>
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} container>
-                    <Grid container direction="row" spacing={32}>
-                        {this.getGridItem(classes, 'Ranked', streak.rankedStreak.count, streak.rankedStreak.win)}
-                        {this.getGridItem(classes, 'Unranked', streak.unrankedStreak.count, streak.unrankedStreak.win)}
-                        {this.getGridItem(classes, 'Combined', streak.combinedStreak.count, streak.combinedStreak.win)}
-                    </Grid>
+                <Grid item xs={12} sm={9} md={9} lg={9} container direction="row" spacing={32} justify="center">
+                    {this.getGridItem(classes, 'Ranked', streak.rankedStreak.count, streak.rankedStreak.win)}
+                    {this.getGridItem(classes, 'Unranked', streak.unrankedStreak.count, streak.unrankedStreak.win)}
+                    {this.getGridItem(classes, 'Combined', streak.combinedStreak.count, streak.combinedStreak.win)}
+                    <Grid item xs={false} md={6} lg={false} style={{padding: 0}}/>
                 </Grid>
 
-                <Grid item xs={12} container alignItems="flex-start" style={{margin: '20px 0 5px 0'}}>
+                <Grid item xs={12} sm={9} md={9} lg={9} container spacing={32} alignItems="flex-start" style={{margin: '20px 0 5px 0'}}>
                     <Grid item xs={12}>
                         <Typography color="textPrimary" variant="h4">All Time Highest</Typography>
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} container>
-                    <Grid container direction="row" spacing={32}>
-                        {this.getGridItem(classes, 'Ranked', streak.highestRankedWinStreak.count, true)}
-                        {this.getGridItem(classes, 'Ranked', streak.highestRankedLoseStreak.count, false)}
-                        {this.getGridItem(classes, 'Unranked', streak.highestUnrankedWinStreak.count, true)}
-                        {this.getGridItem(classes, 'Unranked', streak.highestUnrankedLoseStreak.count, false)}
-                        {this.getGridItem(classes, 'Combined', streak.highestWinStreak.count, true)}
-                        {this.getGridItem(classes, 'Combined', streak.highestLoseStreak.count, false)}
-                    </Grid>
+                <Grid item xs={12} sm={9} md={9} lg={9} container direction="row" spacing={32} justify="center">
+                    {this.getGridItem(classes, 'Ranked', streak.highestRankedWinStreak.count, true)}
+                    {this.getGridItem(classes, 'Ranked', streak.highestRankedLoseStreak.count, false)}
+                    {this.getGridItem(classes, 'Unranked', streak.highestUnrankedWinStreak.count, true)}
+                    {this.getGridItem(classes, 'Unranked', streak.highestUnrankedLoseStreak.count, false)}
+                    {this.getGridItem(classes, 'Combined', streak.highestWinStreak.count, true)}
+                    {this.getGridItem(classes, 'Combined', streak.highestLoseStreak.count, false)}
                 </Grid>
             </Grid>
         );
