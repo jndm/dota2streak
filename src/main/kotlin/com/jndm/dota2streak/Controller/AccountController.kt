@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")
 class AccountController(private val accountService: AccountService) {
     @GetMapping("/search-by-name")
-    fun getSearchResultByName(@RequestParam(required = true)name : String) : Account? {
+    fun getSearchResultByName(@RequestParam(required = true)name : String) : List<Account>? {
         var accounts = accountService.getAccounts(name)
 
         accounts = accounts
@@ -19,7 +19,7 @@ class AccountController(private val accountService: AccountService) {
                 ?.sortedWith(compareByDescending(nullsFirst<Float>()) {it.similarity})
                 ?.toList()
 
-        return accounts?.first()
+        return accounts?.take(10)
     }
 
     @GetMapping("/search-by-id")

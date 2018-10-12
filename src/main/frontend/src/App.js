@@ -83,23 +83,6 @@ class App extends Component {
         }
     }
 
-    getUserInfo = async (name) => {
-        try {
-            this.setState({loading: true});
-            let response = await axios.get("/api/search-by-name", { params: { name } });
-            this.setState({loading: false});
-
-            if(response.data == null || response.data.account_id == null) {
-                throw new Error("User not found with name: ", name);
-            }
-            this.setState({user: response.data});
-            this.props.history.push(`/stats/${response.data.account_id}`);
-        } catch (err) {
-            this.setState({loading: false});
-            console.log(err);
-        }
-    }
-
     render() {
         const { classes } = this.props;
         return (
