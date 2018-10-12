@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
 import { library }  from '@fortawesome/fontawesome-svg-core';
 import { faSearch, faAngleDoubleLeft, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
@@ -78,9 +77,14 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
+            selectedUser: null,
             loading: false
         }
+    }
+
+    setSelectedUser = (user) => {
+        this.setState({selectedUser: user});
+        this.props.history.push(`/stats/${user.account_id}`);
     }
 
     render() {
@@ -95,8 +99,8 @@ class App extends Component {
                             <Grid container direction="row" justify="center">
                                 <Grid item xs={10}>
                                     <Switch>
-                                        <Route exact path='/stats/:accountId' render={(props) => <Stats {...props} user={this.state.user}/>} />
-                                        <Route path='/' render={(props) => <Search {...props} getUserInfo={this.getUserInfo} loading={this.state.loading} />} />
+                                        <Route exact path='/stats/:accountId' render={(props) => <Stats {...props} user={this.state.selectedUser}/>} />
+                                        <Route path='/' render={(props) => <Search {...props} setSelectedUser={this.setSelectedUser} loading={this.state.loading} />} />
                                     </Switch>
                                 </Grid>
                             </Grid>

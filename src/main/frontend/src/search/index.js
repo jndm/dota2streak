@@ -28,22 +28,16 @@ class Stats extends Component {
     }
 
     getUserInfo = async (name) => {
-        /*
         try {
             this.setState({loading: true});
             let response = await axios.get("/api/search-by-name", { params: { name } });
-            this.setState({loading: false});
-
-            if(response.data == null || response.data.account_id == null) {
-                throw new Error("User not found with name: ", name);
-            }
-            this.setState({user: response.data});
-            this.props.history.push(`/stats/${response.data.account_id}`);
+            let users = response.data ? response.data : [];
+            this.setState({loading: false, users });
         } catch (err) {
             this.setState({loading: false});
             console.log(err);
-        }*/
-
+        }
+/*
         var data = [
             {
                 account_id: 321545,
@@ -117,7 +111,7 @@ class Stats extends Component {
             }
         ];
 
-        this.setState({users: data});
+        this.setState({users: data});*/
     }
 
     onKeyPress = (target) => {
@@ -138,6 +132,10 @@ class Stats extends Component {
 
     onClickSearch = () => {
         this.getUserInfo(this.state.name);
+    }
+
+    onSelectUser = (user) => {
+        this.props.setSelectedUser(user);
     }
 
     render() {
@@ -169,15 +167,15 @@ class Stats extends Component {
                             color="primary"
                             className={classes.button}
                             onClick={this.onClickSearch}
-                            disabled={this.props.loading}>
-                            {!this.props.loading
+                            disabled={this.state.loading || !this.state.name}>
+                            {!this.state.loading
                                 ? <FontAwesomeIcon icon='search' size="2x"/>
                                 : <FontAwesomeIcon className="loading" icon="spinner" size="2x"/>
                             }
                         </Button>
                     </Grid>
                 </Grid>
-                <SearchResult users={this.state.users}/>
+                <SearchResult users={this.state.users} onSelectUser={this.onSelectUser} loading={this.state.loading}/>
             </Grid>
         );
     }

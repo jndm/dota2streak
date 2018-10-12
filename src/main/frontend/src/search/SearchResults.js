@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -15,14 +14,10 @@ const styles = theme => ({
 })
 
 class SearchResults extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     getCard = (classes, user) => {
         return (
             <Grid item xs={12} sm={12} md={6} lg={4} key={user.account_id}>
-                <Paper>
+                <Paper onClick={() => this.props.onSelectUser(user)}>
                     <Grid container direction="row" alignItems="center" style={{height: 100}}>
                         <Grid item xs={3} sm={3} md={3} lg={3}>
                             <img className={classes.image} src={user.avatarfull} alt="avatar"/>
@@ -39,10 +34,31 @@ class SearchResults extends Component {
     }
 
     render() {
-        const { classes, users } = this.props;
+        const { classes, users, loading } = this.props;
+
+        if(loading) {
+            return (
+                <Grid item xs={12} container direction='column' alignItems='center' justify="center" style={{marginTop: '5vh'}}>
+                    <FontAwesomeIcon className="loading" icon="spinner" size="4x"/>
+                </Grid>
+            );
+        }
 
         if(!users) {
             return null;
+        }
+
+        if(users.length === 0) {
+            return (
+                <Grid item xs={12} container justify="center" alignItems="center" style={{marginTop: 30}}>
+                    <Grid item xs={12}>
+                        <Typography align='center' color="textPrimary" variant="h4">Could not find account.</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography align='center' color="textPrimary" variant="h4">Please try different name.</Typography>
+                    </Grid>
+                </Grid>
+            )
         }
 
         return (
